@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ext-resource-dependency" content="assets/item-sabaton-tee.png" data-resource-id="tee-sabaton">
+<meta name="ext-resource-dependency" content="assets/icons/tshirt.svg" data-resource-id="icon-tshirt">
+<meta name="ext-resource-dependency" content="assets/icons/shirt.svg" data-resource-id="icon-shirt">
+<meta name="ext-resource-dependency" content="assets/icons/hoodie.svg" data-resource-id="icon-hoodie">
+<meta name="ext-resource-dependency" content="assets/icons/coat.svg" data-resource-id="icon-coat">
+<meta name="ext-resource-dependency" content="assets/icons/jeans.svg" data-resource-id="icon-jeans">
+<meta name="ext-resource-dependency" content="assets/icons/sweatpants.svg" data-resource-id="icon-sweatpants">
+<meta name="ext-resource-dependency" content="assets/icons/boot.svg" data-resource-id="icon-boot">
+<meta name="ext-resource-dependency" content="assets/icons/sneaker.svg" data-resource-id="icon-sneaker">
+<meta name="ext-resource-dependency" content="assets/icons/cap.svg" data-resource-id="icon-cap">
+<meta name="ext-resource-dependency" content="assets/icons/scarf.svg" data-resource-id="icon-scarf">
+<meta name="ext-resource-dependency" content="assets/icons/glove.svg" data-resource-id="icon-glove">
+<meta name="ext-resource-dependency" content="assets/icons/socks.svg" data-resource-id="icon-socks">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" data-bg-color="#0E0E13">
+<rect width="100" height="100" fill="#0E0E13"></rect>
+<text x="50" y="58" font-family="Georgia, serif" font-size="34" fill="#7C6FEF" text-anchor="middle">WC</text>
+</svg>
+</template>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600&amp;display=swap">
+<script src="./image-slot.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #07070A; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  a { color: #7C6FEF; text-decoration: none; }
+  a:hover { color: #F2F0F5; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+  @keyframes wc-spin { to { transform: rotate(360deg); } }
+  @keyframes wc-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes wc-toast { 0% { opacity: 0; transform: translateY(12px); } 12% { opacity: 1; transform: none; } 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-6px); } }
+</style>
+</helmet>
+<div style="height: 100vh; background: #0E0E13; font-family: 'General Sans', system-ui, sans-serif;">
+  <div style="height: 100%;">
+    <div style="position: relative; width: 100%; height: 100%; overflow: hidden; background: #0E0E13; color: #F2F0F5; display: flex; flex-direction: column;">
+
+
+      <sc-if value="{{ isLock }}" hint-placeholder-val="{{ true }}">
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 40px; text-align: center;">
+          <div style="font-family: 'EB Garamond', Garamond, serif; font-size: 76px; line-height: .9; letter-spacing: -.02em;">WC</div>
+          <div style="margin-top: 10px; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: #9A97A8;">Wardrobe Catalog</div>
+          <div style="display: flex; gap: 14px; margin-top: 56px;">
+            <sc-for list="{{ pinDots }}" as="dot" hint-placeholder-count="4">
+              <div style="width: 13px; height: 13px; border-radius: 50%; background: {{ dot.bg }}; border: 1px solid {{ dot.bd }}; transition: background .18s;"></div>
+            </sc-for>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, 68px); gap: 14px; margin-top: 44px;">
+            <sc-for list="{{ keypad }}" as="key" hint-placeholder-count="9">
+              <button onClick="{{ key.onClick }}" style="height: 62px; border-radius: 20px; border: 1px solid rgba(255,255,255,.07); background: #1B1B22; color: #F2F0F5; font-family: 'General Sans', sans-serif; font-size: 22px; font-weight: 500; cursor: pointer; transition: background .15s;" style-hover="background: #24242E;" style-active="background: #4A3F73;">{{ key.label }}</button>
+            </sc-for>
+          </div>
+          
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isHome }}">
+        <div style="flex: 1; overflow-y: auto; padding: 22px 16px 120px; animation: wc-in .3s ease both;">
+          <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+            <div>
+              <div style="font-family: 'EB Garamond', Garamond, serif; font-size: 46px; line-height: 1; letter-spacing: -.02em; color: #7C6FEF;">WC</div>
+              <div style="margin-top: 6px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">{{ totalLine }}</div>
+            </div>
+            <button onClick="{{ openOverview }}" style="display: flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: 999px; border: 1px solid #4A3F73; background: none; color: #7C6FEF; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .15s, border-color .15s;" style-hover="border-color: #7C6FEF; background: rgba(124,111,239,.1);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"></path></svg>
+              Overview
+            </button>
+          </div>
+          
+
+          <div style="margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+              <button onClick="{{ g.onClick }}" style="grid-column: {{ g.span }}; text-align: left; padding: 16px 16px 14px; min-height: 122px; border-radius: 18px; border: 1px solid rgba(255,255,255,.07); background: #1B1B22; color: #F2F0F5; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; transition: border-color .16s, background .16s;" style-hover="border-color: rgba(124,111,239,.55); background: #20202A;">
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                  <span style="font-family: 'EB Garamond', Garamond, serif; font-size: 25px; line-height: 1;">{{ g.name }}</span>
+                  <span style="font-family: 'EB Garamond', Garamond, serif; font-size: 25px; line-height: 1; color: #7C6FEF;">{{ g.count }}</span>
+                </div>
+                <div style="font-size: 11.5px; line-height: 1.45; color: #9A97A8;">{{ g.catLine }}</div>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isGroup }}">
+        <div style="flex: 1; overflow-y: auto; padding: 18px 0 120px; animation: wc-in .28s ease both;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 0 16px 16px;">
+            <button onClick="{{ goHome }}" style="width: 34px; height: 34px; margin-left: -8px; border: none; background: none; color: #F2F0F5; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="color: #7C6FEF;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"></path></svg>
+            </button>
+            <span style="flex: 1; min-width: 0; font-family: 'EB Garamond', Garamond, serif; font-size: 30px; line-height: 1.05;">{{ groupName }}</span>
+            <div style="display: flex; padding: 3px; gap: 3px; border-radius: 12px; background: #1B1B22; border: 1px solid rgba(255,255,255,.07);">
+              <button onClick="{{ setGrid }}" title="Grid" style="width: 34px; height: 30px; border: none; border-radius: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; background: {{ gridBtnBg }}; color: {{ gridBtnFg }};">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1.5"></rect><rect x="13" y="3" width="8" height="8" rx="1.5"></rect><rect x="3" y="13" width="8" height="8" rx="1.5"></rect><rect x="13" y="13" width="8" height="8" rx="1.5"></rect></svg>
+              </button>
+              <button onClick="{{ setList }}" title="List" style="width: 34px; height: 30px; border: none; border-radius: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 0; background: {{ listBtnBg }}; color: {{ listBtnFg }};">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display: block;"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+              </button>
+            </div>
+          </div>
+          <sc-if value="{{ isGridView }}">
+            <div style="padding: 0 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px;">
+              <sc-for list="{{ cats }}" as="c" hint-placeholder-count="4">
+                <button onClick="{{ c.onClick }}" style="min-width: 0; text-align: left; padding: 16px; border-radius: 18px; border: 1px solid rgba(255,255,255,.07); background: #1B1B22; color: #F2F0F5; cursor: pointer; display: flex; flex-direction: column; gap: 20px; transition: border-color .16s, background .16s;" style-hover="border-color: rgba(124,111,239,.55); background: #20202A;">
+                  <sc-if value="{{ c.icon }}" hint-placeholder-val="{{ false }}">
+                    <img ref="{{ c.iconRef }}" alt="" style="width: 64px; height: 64px; object-fit: contain;" />
+                  </sc-if>
+                  <div>
+                    <div style="font-family: 'EB Garamond', Garamond, serif; font-size: 21px; line-height: 1.15;">{{ c.name }}</div>
+                    <div style="margin-top: 3px; font-size: 12px; color: #9A97A8;">{{ c.countLine }}</div>
+                  </div>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isListView }}">
+          <div style="border-top: 1px solid rgba(255,255,255,.07);">
+            <sc-for list="{{ cats }}" as="c" hint-placeholder-count="4">
+              <button onClick="{{ c.onClick }}" style="width: 100%; text-align: left; display: flex; align-items: center; gap: 14px; padding: 12px 16px; border: none; border-bottom: 1px solid rgba(255,255,255,.07); background: none; color: #F2F0F5; cursor: pointer; transition: background .15s;" style-hover="background: #15151C;">
+                <div style="width: 52px; height: 52px; border-radius: 13px; background: #1B1B22; flex: none; display: flex; align-items: center; justify-content: center;">
+                  <sc-if value="{{ c.icon }}" hint-placeholder-val="{{ false }}">
+                    <img ref="{{ c.iconRef }}" alt="" style="width: 42px; height: 42px; object-fit: contain;" />
+                  </sc-if>
+                </div>
+                <div style="flex: 1;">
+                  <div style="font-family: 'EB Garamond', Garamond, serif; font-size: 21px; line-height: 1.15;">{{ c.name }}</div>
+                  <div style="margin-top: 3px; font-size: 12px; color: #9A97A8;">{{ c.countLine }}</div>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A3F73" stroke-width="2"><path d="M9 5l7 7-7 7"></path></svg>
+              </button>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isItems }}">
+        <div style="flex: 1; overflow-y: auto; overflow-x: hidden; padding: 18px 0 120px; animation: wc-in .28s ease both;">
+          <div style="display: flex; align-items: center; gap: 8px; padding: 0 16px 14px;">
+            <button onClick="{{ goGroup }}" style="width: 34px; height: 34px; border: none; background: none; color: #F2F0F5; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="color: #7C6FEF;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"></path></svg>
+            </button>
+            <span style="flex: 1; min-width: 0; font-family: 'EB Garamond', Garamond, serif; font-size: 29px; line-height: 1.05; overflow-wrap: break-word;">{{ catName }}</span>
+            <div style="display: flex; padding: 3px; gap: 3px; border-radius: 12px; background: #1B1B22; border: 1px solid rgba(255,255,255,.07);">
+              <button onClick="{{ setGrid }}" title="Grid" style="width: 34px; height: 30px; border: none; border-radius: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; background: {{ gridBtnBg }}; color: {{ gridBtnFg }};">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1.5"></rect><rect x="13" y="3" width="8" height="8" rx="1.5"></rect><rect x="3" y="13" width="8" height="8" rx="1.5"></rect><rect x="13" y="13" width="8" height="8" rx="1.5"></rect></svg>
+              </button>
+              <button onClick="{{ setList }}" title="List" style="width: 34px; height: 30px; border: none; border-radius: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 0; background: {{ listBtnBg }}; color: {{ listBtnFg }};">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display: block;"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <sc-if value="{{ isGridView }}">
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: #0E0E13; border-top: 1px solid rgba(255,255,255,.08); overflow: hidden;">
+              <sc-for list="{{ listItems }}" as="it" hint-placeholder-count="4">
+                <button onClick="{{ it.onClick }}" style="min-width: 0; overflow: hidden; background: #0E0E13; border: none; border-right: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); padding: 0 0 14px; color: #F2F0F5; cursor: pointer; text-align: center; transition: background .16s;" style-hover="background: #14141A;">
+                  <div style="position: relative; width: 100%; height: 208px; display: flex; align-items: center; justify-content: center; padding: 14px;">
+                    <sc-if value="{{ it.hasImg }}">
+                      <div style="width: 100%; height: 100%; background-size: contain; background-position: center; background-repeat: no-repeat;" ref="{{ it.imgRef }}"></div>
+                    </sc-if>
+                    <sc-if value="{{ it.noImg }}">
+                      <sc-if value="{{ it.icon }}" hint-placeholder-val="{{ false }}">
+                        <img ref="{{ it.iconRef }}" alt="" style="width: 80px; height: 80px; object-fit: contain; opacity: .55;" />
+                      </sc-if>
+                    </sc-if>
+                  </div>
+                  <div style="padding: 0 12px; min-height: 52px;">
+                    <div style="font-family: 'EB Garamond', Garamond, serif; font-size: 18px; line-height: 1.2;">{{ it.name }}</div>
+                    <div style="margin-top: 4px; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #9A97A8;">{{ it.metaLine }}</div>
+                  </div>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isListView }}">
+            <div style="border-top: 1px solid rgba(255,255,255,.07);">
+              <sc-for list="{{ listItems }}" as="it" hint-placeholder-count="5">
+                <button onClick="{{ it.onClick }}" style="width: 100%; display: flex; align-items: center; gap: 13px; padding: 9px 16px; border: none; border-bottom: 1px solid rgba(255,255,255,.07); background: none; color: #F2F0F5; cursor: pointer; text-align: left; transition: background .15s;" style-hover="background: #15151C;">
+                  <div style="width: 44px; height: 52px; flex: none; border-radius: 6px; background: #1B1B22; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                    <sc-if value="{{ it.hasImg }}">
+                      <div style="width: 100%; height: 100%; background-size: contain; background-position: center; background-repeat: no-repeat;" ref="{{ it.imgRef }}"></div>
+                    </sc-if>
+                    <sc-if value="{{ it.noImg }}">
+                      <span style="font-family: 'EB Garamond', Garamond, serif; font-size: 16px; color: #4A3F73;">{{ it.initial }}</span>
+                    </sc-if>
+                  </div>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="font-family: 'EB Garamond', Garamond, serif; font-size: 19px; line-height: 1.2;">{{ it.name }}</div>
+                    <div style="margin-top: 2px; font-size: 11.5px; color: #9A97A8;">{{ it.metaLine }}</div>
+                  </div>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4A3F73" stroke-width="2"><path d="M9 5l7 7-7 7"></path></svg>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDetail }}">
+        <div style="flex: 1; overflow-y: auto; padding-bottom: 40px; animation: wc-in .28s ease both;">
+          <div style="position: relative; width: 100%; height: 430px; background: #16161D; display: flex; align-items: center; justify-content: center; padding: 26px;">
+            <sc-if value="{{ detailHasImg }}">
+              <div style="width: 100%; height: 100%; background-size: contain; background-position: center; background-repeat: no-repeat;" ref="{{ detailImgRef }}"></div>
+            </sc-if>
+            <sc-if value="{{ detailNoImg }}">
+              <image-slot id="{{ detailSlotId }}" shape="rect" fit="contain" placeholder="Drop the photo of this item"></image-slot>
+            </sc-if>
+            <button onClick="{{ backToItems }}" style="position: absolute; top: 16px; left: 16px; z-index: 20; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(14,14,19,.72); backdrop-filter: blur(8px); color: #F2F0F5; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="color: #7C6FEF;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"></path></svg>
+            </button>
+          </div>
+
+          <div style="padding: 20px 16px 0;">
+            <div style="font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #7C6FEF;">{{ detailCat }}</div>
+            <div style="margin-top: 6px; font-family: 'EB Garamond', Garamond, serif; font-size: 34px; line-height: 1.1; text-wrap: pretty;">{{ detailName }}</div>
+            <div style="margin-top: 8px; font-size: 13px; color: #9A97A8;">{{ detailAdded }}</div>
+          </div>
+
+          <div style="margin-top: 22px; padding: 0 16px; display: flex; flex-direction: column; gap: 20px;">
+            <div>
+              <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">Material</div>
+              <div style="margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px;">
+                <sc-for list="{{ dMaterials }}" as="o" hint-placeholder-count="5">
+                  <button onClick="{{ o.onClick }}" style="padding: 8px 14px; border-radius: 999px; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; background: {{ o.bg }}; color: {{ o.fg }}; border: 1px solid {{ o.bd }}; transition: all .15s;">{{ o.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">Season</div>
+              <div style="margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px;">
+                <sc-for list="{{ dSeasons }}" as="o" hint-placeholder-count="5">
+                  <button onClick="{{ o.onClick }}" style="padding: 8px 14px; border-radius: 999px; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; background: {{ o.bg }}; color: {{ o.fg }}; border: 1px solid {{ o.bd }}; transition: all .15s;">{{ o.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">Colour</div>
+              <div style="margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px;">
+                <sc-for list="{{ dColors }}" as="o" hint-placeholder-count="6">
+                  <button onClick="{{ o.onClick }}" style="padding: 8px 14px; border-radius: 999px; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; background: {{ o.bg }}; color: {{ o.fg }}; border: 1px solid {{ o.bd }}; transition: all .15s;">{{ o.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <button onClick="{{ saveDetail }}" style="margin-top: 4px; height: 52px; border-radius: 16px; border: none; background: #7C6FEF; color: #0E0E13; font-family: 'General Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer;" style-hover="background: #8F84F5;" style-active="transform: scale(.99);">Save</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCapture }}">
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 44px; text-align: center; animation: wc-in .25s ease both;">
+          <div style="width: 62px; height: 62px; border-radius: 50%; border: 2px solid rgba(124,111,239,.22); border-top-color: #7C6FEF; animation: wc-spin .9s linear infinite;"></div>
+          <div style="margin-top: 30px; font-family: 'EB Garamond', Garamond, serif; font-size: 27px;">{{ captureStep }}</div>
+          <div style="margin-top: 12px; font-size: 13px; line-height: 1.55; color: #9A97A8;">Imagine you're taking a picture right now. Hold still.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isForm }}">
+        <div style="flex: 1; overflow-y: auto; padding-bottom: 108px; animation: wc-in .28s ease both;">
+          <div style="position: relative; width: 100%; height: 340px; background: #16161D; display: flex; align-items: center; justify-content: center; padding: 26px 30px 22px;">
+            <image-slot id="wc-new-item" shape="rect" fit="contain" src="assets/item-sabaton-tee.png" placeholder="Drop the photo you just took"></image-slot>
+            <button onClick="{{ cancelAdd }}" style="position: absolute; top: 16px; left: 16px; z-index: 20; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(14,14,19,.72); color: #F2F0F5; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="color: #7C6FEF;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+            </button>
+            <div style="position: absolute; bottom: 14px; right: 16px; padding: 6px 11px; border-radius: 999px; background: rgba(74,63,115,.6); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #F2F0F5;">Background removed</div>
+          </div>
+
+          <div style="padding: 20px 16px 0;">
+            <div style="font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #9A97A8;">New item</div>
+            <input value="{{ draftName }}" onChange="{{ setName }}" placeholder="Name it" style="margin-top: 8px; width: 100%; padding: 12px 14px; border-radius: 14px; background: #1B1B22; border: 1px solid rgba(255,255,255,.08); color: #F2F0F5; font-family: 'EB Garamond', Garamond, serif; font-size: 24px; outline: none;" style-focus="border-color: #7C6FEF;">
+          </div>
+
+          <div style="margin-top: 22px; padding: 0 16px; display: flex; flex-direction: column; gap: 20px;">
+            <div>
+              <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">Category</div>
+              <div style="margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px;">
+                <sc-for list="{{ fCats }}" as="o" hint-placeholder-count="8">
+                  <button onClick="{{ o.onClick }}" style="padding: 8px 14px; border-radius: 999px; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; background: {{ o.bg }}; color: {{ o.fg }}; border: 1px solid {{ o.bd }}; transition: all .15s;">{{ o.label }}</button>
+                </sc-for>
+                <button onClick="{{ toggleNewCat }}" style="padding: 8px 14px; border-radius: 999px; background: none; border: 1px dashed #4A3F73; color: #7C6FEF; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer;" style-hover="border-color: #7C6FEF;">+ New category</button>
+              </div>
+              <sc-if value="{{ addingCat }}">
+                <div style="margin-top: 10px; display: flex; gap: 8px;">
+                  <input value="{{ newCat }}" onChange="{{ setNewCat }}" placeholder="e.g. Frock coats" style="flex: 1; padding: 11px 13px; border-radius: 12px; background: #1B1B22; border: 1px solid rgba(255,255,255,.08); color: #F2F0F5; font-family: 'General Sans', sans-serif; font-size: 14px; outline: none;" style-focus="border-color: #7C6FEF;">
+                  <button onClick="{{ addCat }}" style="padding: 0 18px; border-radius: 12px; border: none; background: #4A3F73; color: #F2F0F5; font-family: 'General Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer;" style-hover="background: #7C6FEF; color: #0E0E13;">Add</button>
+                </div>
+                <div style="margin-top: 7px; font-size: 12px; color: #9A97A8;">{{ dupeNote }}</div>
+              </sc-if>
+            </div>
+            <div>
+              <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">Material</div>
+              <div style="margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px;">
+                <sc-for list="{{ fMaterials }}" as="o" hint-placeholder-count="5">
+                  <button onClick="{{ o.onClick }}" style="padding: 8px 14px; border-radius: 999px; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; background: {{ o.bg }}; color: {{ o.fg }}; border: 1px solid {{ o.bd }}; transition: all .15s;">{{ o.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">Season</div>
+              <div style="margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px;">
+                <sc-for list="{{ fSeasons }}" as="o" hint-placeholder-count="5">
+                  <button onClick="{{ o.onClick }}" style="padding: 8px 14px; border-radius: 999px; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; background: {{ o.bg }}; color: {{ o.fg }}; border: 1px solid {{ o.bd }}; transition: all .15s;">{{ o.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">Colour</div>
+              <div style="margin-top: 9px; display: flex; flex-wrap: wrap; gap: 7px;">
+                <sc-for list="{{ fColors }}" as="o" hint-placeholder-count="6">
+                  <button onClick="{{ o.onClick }}" style="padding: 8px 14px; border-radius: 999px; font-family: 'General Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; background: {{ o.bg }}; color: {{ o.fg }}; border: 1px solid {{ o.bd }}; transition: all .15s;">{{ o.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; padding: 14px 16px 24px; background: linear-gradient(to top, #0E0E13 55%, rgba(14,14,19,0)); display: flex; gap: 10px;">
+          <button onClick="{{ save }}" style="flex: 1; height: 52px; border-radius: 16px; border: none; background: {{ saveBg }}; color: {{ saveFg }}; font-family: 'General Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: {{ saveCursor }};">Save to wardrobe</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOverview }}">
+        <div style="position: fixed; inset: 0; z-index: 70; background: #0E0E13; display: flex; flex-direction: column; animation: wc-in .22s ease both;">
+          <div style="flex: none; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 22px 16px 14px; border-bottom: 1px solid rgba(255,255,255,.07);">
+            <div>
+              <div style="font-family: 'EB Garamond', Garamond, serif; font-size: 34px; line-height: 1;">Overview</div>
+              <div style="margin-top: 6px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #9A97A8;">{{ totalLine }}</div>
+            </div>
+            <button onClick="{{ closeOverview }}" style="flex: none; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.1); background: #1B1B22; color: #F2F0F5; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="color: #7C6FEF; border-color: rgba(124,111,239,.5);">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+            </button>
+          </div>
+          <div style="flex: 1; overflow-y: auto; padding: 6px 16px 40px;">
+            <sc-for list="{{ overviewSections }}" as="sec" hint-placeholder-count="6">
+              <div style="border-bottom: 1px solid rgba(255,255,255,.07);">
+                <button onClick="{{ sec.onToggle }}" style="width: 100%; display: flex; align-items: baseline; gap: 10px; padding: 16px 0 10px; border: none; background: none; color: #F2F0F5; cursor: pointer; text-align: left;" style-hover="color: #7C6FEF;">
+                  <span style="flex: 1; min-width: 0; font-family: 'EB Garamond', Garamond, serif; font-size: 18px; line-height: 1.1;">{{ sec.name }}</span>
+                  <span style="font-family: 'EB Garamond', Garamond, serif; font-size: 18px; line-height: 1.1; color: #7C6FEF;">{{ sec.count }}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A3F73" stroke-width="2.2" style="flex: none; transform: rotate({{ sec.rotate }}); transition: transform .18s;"><path d="M6 9l6 6 6-6"></path></svg>
+                </button>
+                <sc-if value="{{ sec.open }}" hint-placeholder-val="{{ true }}">
+                  <ul style="margin: 0 0 14px; padding: 0 0 0 18px; list-style: none; display: flex; flex-direction: column; gap: 6px;">
+                    <sc-for list="{{ sec.names }}" as="n" hint-placeholder-count="3">
+                      <li style="position: relative; font-size: 14px; line-height: 1.4; color: #F2F0F5;">
+                        <span style="position: absolute; left: -14px; color: #4A3F73;">·</span>{{ n.label }}
+                      </li>
+                    </sc-for>
+                  </ul>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showFab }}">
+        <button onClick="{{ startAdd }}" style="position: fixed; right: 20px; bottom: 24px; z-index: 35; width: 60px; height: 60px; border-radius: 50%; border: none; background: #7C6FEF; color: #0E0E13; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 30px rgba(124,111,239,.32);" style-hover="background: #8F84F5;" style-active="transform: scale(.95);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"></path></svg>
+        </button>
+      </sc-if>
+
+      <sc-if value="{{ toast }}">
+        <div style="position: fixed; left: 16px; right: 16px; bottom: 100px; z-index: 60; padding: 13px 16px; border-radius: 14px; background: #24242E; border: 1px solid rgba(124,111,239,.35); font-size: 13.5px; color: #F2F0F5; animation: wc-toast 2.6s ease both;">{{ toast }}</div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:860},&quot;defaultView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;grid&quot;,&quot;list&quot;],&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;'grid' | 'list'&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;skipLock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+class Component extends DCLogic {
+  RES = {
+    'tee-sabaton': 'assets/item-sabaton-tee.png',
+    'icon-tshirt': 'assets/icons/tshirt.svg',
+    'icon-shirt': 'assets/icons/shirt.svg',
+    'icon-hoodie': 'assets/icons/hoodie.svg',
+    'icon-coat': 'assets/icons/coat.svg',
+    'icon-jeans': 'assets/icons/jeans.svg',
+    'icon-sweatpants': 'assets/icons/sweatpants.svg',
+    'icon-boot': 'assets/icons/boot.svg',
+    'icon-sneaker': 'assets/icons/sneaker.svg',
+    'icon-cap': 'assets/icons/cap.svg',
+    'icon-scarf': 'assets/icons/scarf.svg',
+    'icon-glove': 'assets/icons/glove.svg',
+    'icon-socks': 'assets/icons/socks.svg'
+  };
+  res(id) { return (window.__resources && window.__resources[id]) || this.RES[id] || id; }
+  srcRef(url) { return (el) => { if (el && url) el.src = url; }; }
+  bgRef(url) { return (el) => { if (el && url) el.style.backgroundImage = 'url(' + url + ')'; }; }
+  MATERIALS = ['Cotton', 'Wool', 'Linen', 'Leather', 'Denim', 'Silk'];
+  SEASONS = ['Spring', 'Summer', 'Autumn', 'Winter', 'All year'];
+  COLORS = ['Black', 'White', 'Navy', 'Blue', 'Grey', 'Green', 'Brown', 'Olive', 'Burgundy', 'Orange', 'Multi'];
+  ICONS = {
+    'T-Shirts': 'icon-tshirt',
+    'Shirts': 'icon-shirt',
+    'Hoodies': 'icon-hoodie',
+    'Coats': 'icon-coat',
+    'Jeans': 'icon-jeans',
+    'Jogging bottoms': 'icon-sweatpants',
+    'Pajamas': 'icon-sweatpants',
+    'Boots': 'icon-boot',
+    'Shoes': 'icon-sneaker',
+    'Trainers': 'icon-sneaker',
+    'Hats': 'icon-cap',
+    'Scarves': 'icon-scarf',
+    'Gloves': 'icon-glove',
+    'Belts': 'icon-jeans',
+    'Underwear': 'icon-shirt',
+    'Socks': 'icon-socks'
+  };
+  FALLBACK_ICON = 'icon-tshirt';
+  BASE_GROUPS = [
+    { id: 'tops', name: 'Tops', cats: ['T-Shirts', 'Shirts', 'Hoodies'] },
+    { id: 'outerwear', name: 'Outerwear', cats: ['Coats'] },
+    { id: 'bottoms', name: 'Bottoms', cats: ['Jeans', 'Jogging bottoms'] },
+    { id: 'sleepwear', name: 'Sleepwear', cats: ['Pajamas'] },
+    { id: 'footwear', name: 'Footwear', cats: ['Boots', 'Shoes', 'Trainers'] },
+    { id: 'accessories', name: 'Accessories', cats: ['Hats', 'Scarves', 'Gloves', 'Belts'] },
+    { id: 'basics', name: 'Basics', cats: ['Underwear', 'Socks'] }
+  ];
+
+  state = {
+    screen: 'lock',
+    pin: 0,
+    group: null,
+    cat: null,
+    itemId: null,
+    view: this.props.defaultView === 'list' ? 'list' : 'grid',
+    extraCats: [],
+    addingCat: false,
+    newCat: '',
+    dupeNote: 'Case and spacing are ignored when checking for a twin.',
+    captureStep: 'Removing the background',
+    draft: { name: '', cat: null, material: null, season: null, color: null },
+    toast: null,
+    items: [
+      ['tee2', 'Plain White Crew', 'T-Shirts', 'Cotton', 'Summer', 'White', null, 'Added 12 Feb'],
+      ['tee3', 'Navy Crew', 'T-Shirts', 'Cotton', 'Spring', 'Navy', null, 'Added 2 Feb'],
+      ['tee4', 'Faded Band Tee, 1998', 'T-Shirts', 'Cotton', 'Summer', 'Black', null, 'Added 19 Jan'],
+      ['sh1', 'Oxford Button-Down', 'Shirts', 'Cotton', 'All year', 'Grey', null, 'Added 8 March'],
+      ['sh2', 'Mint Poplin Shirt', 'Shirts', 'Cotton', 'Spring', 'Green', null, 'Added 8 March'],
+      ['sh4', 'Black Cotton Shirt', 'Shirts', 'Cotton', 'All year', 'Black', null, 'Added 14 Dec'],
+      ['ho1', 'Black Pullover Hoodie', 'Hoodies', 'Cotton', 'Autumn', 'Black', null, 'Added 20 Nov'],
+      ['ho2', 'Sky Blue Hoodie', 'Hoodies', 'Cotton', 'Spring', 'Blue', null, 'Added 20 Nov'],
+      ['ho3', 'Burnt Orange Hoodie', 'Hoodies', 'Cotton', 'Autumn', 'Orange', null, 'Added 20 Nov'],
+      ['ho4', 'Tie-Dye Hoodie', 'Hoodies', 'Cotton', 'Summer', 'Multi', null, 'Added 20 Nov'],
+      ['co1', 'Heritage Trench', 'Coats', 'Cotton', 'Autumn', 'Brown', null, 'Added 3 Oct'],
+      ['co2', 'Waxed Field Jacket', 'Coats', 'Cotton', 'Winter', 'Olive', null, 'Added 3 Oct'],
+      ['co3', 'Chesterfield Overcoat', 'Coats', 'Wool', 'Winter', 'Black', null, 'Added 28 Sep'],
+      ['co4', 'Frock Coat, repro', 'Coats', 'Wool', 'Winter', 'Burgundy', null, 'Added 11 Sep'],
+      ['je1', 'Selvedge Straight', 'Jeans', 'Denim', 'All year', 'Navy', null, 'Added 7 Aug'],
+      ['je2', 'Black Slim', 'Jeans', 'Denim', 'All year', 'Black', null, 'Added 7 Aug'],
+      ['jo1', 'Charcoal Joggers', 'Jogging bottoms', 'Cotton', 'All year', 'Grey', null, 'Added 2 Aug'],
+      ['pj1', 'Striped Cotton Set', 'Pajamas', 'Cotton', 'All year', 'Navy', null, 'Added 24 Jul'],
+      ['bo1', 'Chelsea Boots', 'Boots', 'Leather', 'Autumn', 'Black', null, 'Added 19 Jul'],
+      ['bo2', 'Brogue Boots', 'Boots', 'Leather', 'Winter', 'Brown', null, 'Added 19 Jul'],
+      ['bo3', 'Wellingtons', 'Boots', 'Silk', 'Spring', 'Olive', null, 'Added 4 Jul'],
+      ['sho1', 'Black Oxfords', 'Shoes', 'Leather', 'All year', 'Black', null, 'Added 30 Jun'],
+      ['sho2', 'Tan Loafers', 'Shoes', 'Leather', 'Summer', 'Brown', null, 'Added 30 Jun'],
+      ['tr1', 'White Leather Trainers', 'Trainers', 'Leather', 'Spring', 'White', null, 'Added 21 Jun'],
+      ['ha1', 'Flat Cap', 'Hats', 'Wool', 'Autumn', 'Grey', null, 'Added 12 Jun'],
+      ['ha2', 'Bowler, 1974', 'Hats', 'Wool', 'Winter', 'Black', null, 'Added 12 Jun'],
+      ['sc1', 'Wool Tartan Scarf', 'Scarves', 'Wool', 'Winter', 'Burgundy', null, 'Added 5 Jun'],
+      ['sc2', 'Silk Cravat', 'Scarves', 'Silk', 'All year', 'Burgundy', null, 'Added 5 Jun'],
+      ['gl1', 'Driving Gloves', 'Gloves', 'Leather', 'Autumn', 'Brown', null, 'Added 1 Jun'],
+      ['be1', 'Brown Leather Belt', 'Belts', 'Leather', 'All year', 'Brown', null, 'Added 27 May'],
+      ['un1', 'Cotton Boxers', 'Underwear', 'Cotton', 'All year', 'Navy', null, 'Added 20 May'],
+      ['so1', 'Argyle Socks', 'Socks', 'Wool', 'Winter', 'Grey', null, 'Added 20 May']
+    ].map(t => ({ id: t[0], name: t[1], cat: t[2], material: t[3], season: t[4], color: t[5], img: t[6] ? this.res(t[6]) : null, added: t[7] }))
+  };
+
+  componentDidMount() {
+    if (this.props.skipLock) this.setState({ screen: 'home' });
+  }
+
+  groupsData() {
+    const g = this.BASE_GROUPS.map(x => ({ ...x }));
+    if (this.state.extraCats.length) g.push({ id: 'custom', name: 'Curiosities', cats: this.state.extraCats });
+    return g;
+  }
+
+  allCats() {
+    return this.groupsData().reduce((a, g) => a.concat(g.cats), []);
+  }
+
+  chips(options, selected, pick) {
+    return options.map(o => ({
+      label: o,
+      bg: o === selected ? '#7C6FEF' : '#1B1B22',
+      fg: o === selected ? '#0E0E13' : '#F2F0F5',
+      bd: o === selected ? '#7C6FEF' : 'rgba(255,255,255,.08)',
+      onClick: () => pick(o)
+    }));
+  }
+
+  decorate(it) {
+    return {
+      ...it,
+      hasImg: !!it.img,
+      noImg: !it.img,
+      icon: this.res(this.ICONS[it.cat] || this.FALLBACK_ICON),
+      iconRef: this.srcRef(this.res(this.ICONS[it.cat] || this.FALLBACK_ICON)),
+      imgRef: this.bgRef(it.img),
+      slotId: 'wc-slot-' + it.id,
+      initial: it.name.charAt(0),
+      metaLine: it.material + ' · ' + it.color,
+      onClick: () => this.setState({ screen: 'detail', itemId: it.id })
+    };
+  }
+
+  tapKey(n) {
+    const pin = this.state.pin + 1;
+    if (pin >= 4) {
+      this.setState({ pin: 0 });
+      setTimeout(() => this.setState({ screen: 'home' }), 220);
+    } else {
+      this.setState({ pin });
+    }
+  }
+
+  startAdd() {
+    const cat = this.state.cat;
+    const draft = {
+      name: cat === 'T-Shirts' ? 'Templars Tour Tee, reprint' : '',
+      cat: cat || null,
+      material: null,
+      season: null,
+      color: null
+    };
+    this.setState({ screen: 'capture', captureStep: 'Uploading the photo', draft, addingCat: false, newCat: '' });
+    setTimeout(() => this.setState({ captureStep: 'Removing the background' }), 1100);
+    setTimeout(() => this.setState({ screen: 'form' }), 4300);
+  }
+
+  setDraft(patch) {
+    this.setState(s => ({ draft: { ...s.draft, ...patch } }));
+  }
+
+  addCat() {
+    const raw = this.state.newCat;
+    const norm = raw.replace(/\s+/g, ' ').trim().toLowerCase();
+    if (!norm) return this.setState({ dupeNote: 'A category needs a name, however dull.' });
+    const twin = this.allCats().find(c => c.replace(/\s+/g, ' ').trim().toLowerCase() === norm);
+    if (twin) {
+      this.setDraft({ cat: twin });
+      return this.setState({ newCat: '', addingCat: false, dupeNote: '', toast: '"' + twin + '" already exists. Selected that one instead.' });
+    }
+    const name = raw.replace(/\s+/g, ' ').trim();
+    this.setState(s => ({ extraCats: s.extraCats.concat([name]), newCat: '', addingCat: false, dupeNote: '' }));
+    this.setDraft({ cat: name });
+  }
+
+  save() {
+    const d = this.state.draft;
+    if (!d.cat) return this.setState({ toast: 'Pick a category first.' });
+    const item = {
+      id: 'new' + Date.now(),
+      name: d.name.trim() || 'Untitled garment',
+      cat: d.cat,
+      material: d.material || 'Cotton',
+      season: d.season || 'All year',
+      color: d.color || 'Black',
+      img: this.res('tee-sabaton'),
+      added: 'Added just now'
+    };
+    const group = this.groupsData().find(g => g.cats.includes(d.cat));
+    this.setState(s => ({
+      items: [item].concat(s.items),
+      screen: 'items',
+      cat: d.cat,
+      group: group ? group.id : s.group,
+      toast: 'Filed. It is already on the desktop.'
+    }));
+    setTimeout(() => this.setState({ toast: null }), 2600);
+  }
+
+  overviewSections() {
+    const s = this.state;
+    const collapsed = s.ovCollapsed || {};
+    const cats = [];
+    this.groupsData().forEach(g => g.cats.forEach(c => { if (cats.indexOf(c) === -1) cats.push(c); }));
+    s.items.forEach(i => { if (cats.indexOf(i.cat) === -1) cats.push(i.cat); });
+    return cats.map(c => {
+      const names = s.items.filter(i => i.cat === c);
+      if (!names.length) return null;
+      const open = !collapsed[c];
+      return {
+        name: c,
+        count: names.length,
+        open,
+        rotate: open ? '0deg' : '-90deg',
+        names: names.map(i => ({ label: i.name })),
+        onToggle: () => this.setState(st => ({ ovCollapsed: { ...(st.ovCollapsed || {}), [c]: !(st.ovCollapsed || {})[c] } }))
+      };
+    }).filter(Boolean);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const groups = this.groupsData();
+    const count = cats => s.items.filter(i => cats.includes(i.cat)).length;
+    const group = groups.find(g => g.id === s.group) || null;
+    const item = s.items.find(i => i.id === s.itemId) || null;
+    const listItems = s.items.filter(i => i.cat === s.cat).map(i => this.decorate(i));
+    const grid = s.view === 'grid';
+    const d = s.draft;
+    const setItem = patch => this.setState(st => ({ items: st.items.map(i => i.id === st.itemId ? { ...i, ...patch } : i) }));
+
+    return {
+      isLock: s.screen === 'lock',
+      isHome: s.screen === 'home',
+      isGroup: s.screen === 'group',
+      isItems: s.screen === 'items',
+      isDetail: s.screen === 'detail',
+      isCapture: s.screen === 'capture',
+      isForm: s.screen === 'form',
+      isOverview: !!s.overview,
+      showFab: s.screen === 'home' || s.screen === 'items' || s.screen === 'group',
+      toast: s.toast,
+
+      pinDots: [0, 1, 2, 3].map(i => ({ bg: i < s.pin ? '#7C6FEF' : 'transparent', bd: i < s.pin ? '#7C6FEF' : '#4A3F73' })),
+      keypad: ['1', '2', '3', '4', '5', '6', '7', '8', '9'].map(n => ({ label: n, onClick: () => this.tapKey(n) })),
+      lock: () => this.setState({ screen: 'lock', pin: 0 }),
+
+      totalLine: s.items.length + ' items · 18 categories',
+      openOverview: () => this.setState({ overview: true }),
+      closeOverview: () => this.setState({ overview: false }),
+      overviewSections: this.overviewSections(),
+      groups: groups.map((g, idx) => ({
+        name: g.name,
+        count: count(g.cats),
+        catLine: g.cats.join('  ·  '),
+        span: idx === groups.length - 1 && groups.length % 2 === 1 ? 'span 2' : 'auto',
+        onClick: () => this.setState({ screen: 'group', group: g.id })
+      })),
+
+      groupName: group ? group.name : '',
+      cats: group ? group.cats.map(c => {
+        const n = s.items.filter(i => i.cat === c).length;
+        return {
+          name: c,
+          countLine: n === 1 ? '1 item' : n + ' items',
+          icon: this.res(this.ICONS[c] || this.FALLBACK_ICON),
+          iconRef: this.srcRef(this.res(this.ICONS[c] || this.FALLBACK_ICON)),
+          onClick: () => this.setState({ screen: 'items', cat: c })
+        };
+      }) : [],
+      goHome: () => this.setState({ screen: 'home' }),
+      goGroup: () => this.setState({ screen: 'group' }),
+
+      catName: s.cat || '',
+      listItems,
+      isGridView: grid,
+      isListView: !grid,
+      setGrid: () => this.setState({ view: 'grid' }),
+      setList: () => this.setState({ view: 'list' }),
+      gridBtnBg: grid ? '#7C6FEF' : 'transparent',
+      gridBtnFg: grid ? '#0E0E13' : '#9A97A8',
+      listBtnBg: grid ? 'transparent' : '#7C6FEF',
+      listBtnFg: grid ? '#9A97A8' : '#0E0E13',
+
+      detailName: item ? item.name : '',
+      detailCat: item ? item.cat : '',
+      detailAdded: item ? item.added : '',
+      detailImg: item ? item.img : null,
+      detailImgRef: this.bgRef(item && item.img),
+      detailHasImg: !!(item && item.img),
+      detailNoImg: !!(item && !item.img),
+      detailSlotId: item ? 'wc-slot-' + item.id : 'wc-slot-none',
+      dMaterials: this.chips(this.MATERIALS, item && item.material, v => setItem({ material: v })),
+      dSeasons: this.chips(this.SEASONS, item && item.season, v => setItem({ season: v })),
+      dColors: this.chips(this.COLORS, item && item.color, v => setItem({ color: v })),
+      backToItems: () => this.setState({ screen: 'items' }),
+      saveDetail: () => {
+        this.setState({ screen: 'items', toast: 'Saved. The desktop already knows.' });
+        setTimeout(() => this.setState({ toast: null }), 2600);
+      },
+
+      captureStep: s.captureStep,
+      startAdd: () => this.startAdd(),
+      cancelAdd: () => this.setState({ screen: s.cat ? 'items' : 'home' }),
+      draftName: d.name,
+      setName: e => this.setDraft({ name: e.target.value }),
+      fCats: this.chips(this.allCats(), d.cat, v => this.setDraft({ cat: v })),
+      fMaterials: this.chips(this.MATERIALS, d.material, v => this.setDraft({ material: v })),
+      fSeasons: this.chips(this.SEASONS, d.season, v => this.setDraft({ season: v })),
+      fColors: this.chips(this.COLORS, d.color, v => this.setDraft({ color: v })),
+      addingCat: s.addingCat,
+      toggleNewCat: () => this.setState(st => ({ addingCat: !st.addingCat })),
+      newCat: s.newCat,
+      setNewCat: e => this.setState({ newCat: e.target.value }),
+      addCat: () => this.addCat(),
+      dupeNote: s.dupeNote,
+      save: () => this.save(),
+      saveBg: d.cat ? '#7C6FEF' : '#4A3F73',
+      saveFg: d.cat ? '#0E0E13' : '#9A97A8',
+      saveCursor: d.cat ? 'pointer' : 'not-allowed'
+    };
+  }
+}
+</script>
+</body>
+</html>
