@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WC — Sign in</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { display: flex; align-items: center; justify-content: center; min-height: 100vh; min-height: 100dvh; padding: 24px; }
+  .login-box { width: 100%; max-width: 340px; text-align: center; }
+  .login-logo { font-family: var(--font-display); font-size: 64px; line-height: .9; letter-spacing: -.02em; }
+  .login-sub { margin-top: 8px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--fog); }
+  .login-form { margin-top: 44px; display: flex; flex-direction: column; gap: 12px; }
+  .login-error { min-height: 16px; font-size: 13px; color: #E07070; }
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <div class="login-logo">WC</div>
+  <div class="login-sub">Wardrobe Catalog</div>
+
+  <form class="login-form" id="login-form">
+    <input id="password-input" class="wc-input" style="text-align:center;" type="password" placeholder="Password" autocomplete="current-password" autofocus>
+    <button type="submit" class="wc-btn-primary">Unlock</button>
+    <div class="login-error" id="login-error"></div>
+  </form>
+</div>
+
+<script>
+  // Single shared password for the whole household of one. Checked
+  // client-side against a constant, same approach as portia/login.html —
+  // fine for a personal, non-financial catalog behind a private URL.
+  // Change it by editing the string below.
+  const WC_PASSWORD = 'CzYuY2#xCyz$2$o^';
+
+  if (localStorage.getItem('wc_auth') === 'true') {
+    window.location.replace('index.html');
+  }
+
+  const form = document.getElementById('login-form');
+  const input = document.getElementById('password-input');
+  const errorEl = document.getElementById('login-error');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value === WC_PASSWORD) {
+      localStorage.setItem('wc_auth', 'true');
+      window.location.href = 'index.html';
+    } else {
+      errorEl.textContent = 'Incorrect password.';
+      input.value = '';
+      input.focus();
+    }
+  });
+</script>
+
+</body>
+</html>
