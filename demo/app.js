@@ -284,7 +284,10 @@ function renderHome() {
     <div class="screen wc-container" style="flex:1;overflow-y:auto;padding:22px 16px 120px;">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;">
         <div>
-          <div style="font-family:var(--font-display);font-size:46px;line-height:1;letter-spacing:-.02em;color:var(--violet);">WC</div>
+          <div style="display:inline-flex;align-items:flex-start;">
+            <div style="font-family:var(--font-display);font-size:46px;line-height:1;letter-spacing:-.02em;color:var(--violet);padding-right:6px;">WC</div>
+            <span class="wc-demo-badge">Demo</span>
+          </div>
           <div style="margin-top:6px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--fog);">${esc(totalLine)}</div>
         </div>
         <button data-action="open-overview" style="display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:999px;border:1px solid var(--dust);background:none;color:var(--violet);font-size:13px;font-weight:600;cursor:pointer;">

@@ -1,4 +1,4 @@
-/* ============ WC — shared styles ============ */
+/* ============ WC — shared styles (demo build) ============ */
 :root {
   --ink: #0E0E13;
   --smoke: #1B1B22;
@@ -126,6 +126,22 @@ button, input { font-family: inherit; }
 
 /* ---- section label ---- */
 .wc-label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--fog); }
+
+/* ---- demo badge (demo build only) ---- */
+.wc-demo-badge {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--fog);
+  background: var(--smoke);
+  border-radius: 6px;
+  padding: 2px 7px;
+  margin-left: 2px;
+  margin-top: 2px;
+  white-space: nowrap;
+}
 
 /* ---- responsive container (desktop hold-up) ---- */
 .wc-container { width: 100%; max-width: 720px; margin: 0 auto; }
