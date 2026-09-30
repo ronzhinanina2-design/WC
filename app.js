@@ -389,7 +389,7 @@ function renderDetail() {
   const materials = MATERIALS_BY_CAT[item.cat] || GENERIC_MATERIALS;
   return `
     <div class="screen" style="flex:1;overflow-y:auto;padding-bottom:40px;">
-      <div style="position:relative;width:100%;height:min(430px,55vh);background:#16161D;display:flex;align-items:center;justify-content:center;padding:26px;">
+      <div class="wc-container" style="position:relative;height:min(430px,55vh);background:#16161D;display:flex;align-items:center;justify-content:center;padding:26px;">
         ${item.img ? `<div style="width:100%;height:100%;background-image:url('${item.img}');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>` : iconSpanHtml(item.cat, 120, 0.5)}
         <button class="wc-back" style="position:absolute;top:16px;left:16px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(14,14,19,.72);backdrop-filter:blur(8px);" data-action="back-to-items"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
         <button style="position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border-radius:50%;border:none;background:rgba(14,14,19,.72);backdrop-filter:blur(8px);color:var(--bone);cursor:pointer;display:flex;align-items:center;justify-content:center;" data-action="confirm-delete" title="Delete item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V4h6v3m-8 0 1 13h8l1-13"/></svg></button>
@@ -423,7 +423,7 @@ function renderAdd() {
   const materials = d.cat ? (MATERIALS_BY_CAT[d.cat] || GENERIC_MATERIALS) : null;
   return `
     <div class="screen" style="flex:1;overflow-y:auto;padding-bottom:108px;">
-      <div style="position:relative;width:100%;height:min(340px,48vh);background:#16161D;display:flex;align-items:center;justify-content:center;padding:26px 30px 22px;">
+      <div class="wc-container" style="position:relative;height:min(340px,48vh);background:#16161D;display:flex;align-items:center;justify-content:center;padding:26px 30px 22px;">
         ${d.photo ? `<div style="width:100%;height:100%;background-image:url('${d.photo}');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>` : `
           <button data-action="pick-photo" style="width:100%;height:100%;border:1.5px dashed var(--line-hi);border-radius:16px;background:none;color:var(--fog);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-size:13px;">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>
@@ -499,12 +499,14 @@ function renderOverview() {
   const totalLine = `${items.length} item${items.length === 1 ? '' : 's'} · ${allCats().length} categories`;
   return `
     <div style="position:fixed;inset:0;z-index:70;background:var(--ink);display:flex;flex-direction:column;" class="screen">
-      <div style="flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:22px 16px 14px;border-bottom:1px solid var(--line);">
-        <div>
-          <div style="font-family:var(--font-display);font-size:34px;line-height:1;">Overview</div>
-          <div style="margin-top:6px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--fog);">${esc(totalLine)}</div>
+      <div style="flex:none;border-bottom:1px solid var(--line);">
+        <div class="wc-container" style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:22px 16px 14px;">
+          <div>
+            <div style="font-family:var(--font-display);font-size:34px;line-height:1;">Overview</div>
+            <div style="margin-top:6px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--fog);">${esc(totalLine)}</div>
+          </div>
+          <button style="flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-hi);background:var(--smoke);color:var(--bone);cursor:pointer;display:flex;align-items:center;justify-content:center;" data-action="close-overview"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </div>
-        <button style="flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-hi);background:var(--smoke);color:var(--bone);cursor:pointer;display:flex;align-items:center;justify-content:center;" data-action="close-overview"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
       <div class="wc-container" style="flex:1;overflow-y:auto;padding:6px 16px 40px;">
         ${sections.length === 0 ? `<div style="padding:40px 0;text-align:center;color:var(--fog);font-size:14px;">Nothing filed yet.</div>` : sections.map((sec) => `
