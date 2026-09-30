@@ -1,0 +1,134 @@
+/* ============ WC — shared styles ============ */
+:root {
+  --ink: #0E0E13;
+  --smoke: #1B1B22;
+  --smoke-hi: #20202A;
+  --violet: #7C6FEF;
+  --violet-hi: #8F84F5;
+  --dust: #4A3F73;
+  --bone: #F2F0F5;
+  --fog: #9A97A8;
+  --line: rgba(255, 255, 255, .07);
+  --line-hi: rgba(255, 255, 255, .12);
+  --font-display: 'EB Garamond', Garamond, serif;
+  --font-body: 'General Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; background: var(--ink); }
+body {
+  color: var(--bone);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+a { color: var(--violet); text-decoration: none; }
+a:hover { color: var(--bone); }
+button, input { font-family: inherit; }
+::-webkit-scrollbar { width: 0; height: 0; }
+
+@keyframes wc-spin { to { transform: rotate(360deg); } }
+@keyframes wc-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes wc-toast { 0% { opacity: 0; transform: translateY(12px); } 12% { opacity: 1; transform: none; } 84% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-6px); } }
+
+/* ---- layout shell ---- */
+#app { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+.screen { animation: wc-in .26s ease both; }
+
+/* ---- icon (mask-based, tintable) ---- */
+.wc-icon {
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* ---- topbar / back ---- */
+.wc-back {
+  width: 34px; height: 34px; border: none; background: none; color: var(--bone);
+  cursor: pointer; display: flex; align-items: center; justify-content: center; flex: none;
+}
+.wc-back:hover { color: var(--violet); }
+
+/* ---- view toggle ---- */
+.wc-toggle { display: flex; padding: 3px; gap: 3px; border-radius: 12px; background: var(--smoke); border: 1px solid var(--line); flex: none; }
+.wc-toggle button { width: 34px; height: 30px; border: none; border-radius: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--fog); background: transparent; }
+.wc-toggle button.is-active { background: var(--violet); color: var(--ink); }
+
+/* ---- chips (material / season / custom category) ---- */
+.wc-chip {
+  padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 500; cursor: pointer;
+  background: var(--smoke); color: var(--bone); border: 1px solid var(--line);
+  transition: background .15s, color .15s, border-color .15s;
+}
+.wc-chip.is-selected { background: var(--violet); color: var(--ink); border-color: var(--violet); }
+.wc-chip-add {
+  padding: 8px 14px; border-radius: 999px; background: none; border: 1px dashed var(--dust);
+  color: var(--violet); font-size: 13px; font-weight: 500; cursor: pointer;
+}
+.wc-chip-add:hover { border-color: var(--violet); }
+
+/* ---- colour swatches ---- */
+.wc-swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 9px; }
+.wc-swatch {
+  position: relative; aspect-ratio: 1; border-radius: 11px; cursor: pointer;
+  border: 2px solid var(--line); display: flex; align-items: center; justify-content: center;
+}
+.wc-swatch.is-selected { border-color: var(--violet); box-shadow: 0 0 0 2px rgba(124,111,239,.35); }
+.wc-swatch svg { width: 40%; height: 40%; }
+.wc-swatch-label { margin-top: 20px; font-size: 9.5px; text-align: center; color: var(--fog); grid-column: 1 / -1; display: none; }
+
+/* ---- buttons ---- */
+.wc-btn-primary {
+  height: 52px; border-radius: 16px; border: none; background: var(--violet); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; font-weight: 600; cursor: pointer; width: 100%;
+}
+.wc-btn-primary:hover { background: var(--violet-hi); }
+.wc-btn-primary:active { transform: scale(.99); }
+.wc-btn-primary[disabled] { background: var(--dust); color: var(--fog); cursor: not-allowed; }
+
+/* ---- cards ---- */
+.wc-group-card, .wc-cat-card {
+  text-align: left; padding: 16px; border-radius: 18px; border: 1px solid var(--line);
+  background: var(--smoke); color: var(--bone); cursor: pointer;
+  transition: border-color .16s, background .16s;
+}
+.wc-group-card:hover, .wc-cat-card:hover { border-color: rgba(124,111,239,.55); background: var(--smoke-hi); }
+
+/* ---- FAB ---- */
+.wc-fab {
+  position: fixed; right: 20px; bottom: max(24px, env(safe-area-inset-bottom)); z-index: 35;
+  width: 60px; height: 60px; border-radius: 50%; border: none; background: var(--violet); color: var(--ink);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 14px 30px rgba(124,111,239,.32);
+}
+.wc-fab:hover { background: var(--violet-hi); }
+.wc-fab:active { transform: scale(.95); }
+
+/* ---- toast ---- */
+.wc-toast {
+  position: fixed; left: 16px; right: 16px; bottom: 100px; z-index: 60; margin: 0 auto; max-width: 420px;
+  padding: 13px 16px; border-radius: 14px; background: #24242E; border: 1px solid rgba(124,111,239,.35);
+  font-size: 13.5px; color: var(--bone); animation: wc-toast 2.6s ease both; text-align: center;
+}
+
+/* ---- inputs ---- */
+.wc-input {
+  width: 100%; padding: 12px 14px; border-radius: 14px; background: var(--smoke);
+  border: 1px solid var(--line-hi); color: var(--bone); font-family: var(--font-body); font-size: 15px; outline: none;
+}
+.wc-input:focus { border-color: var(--violet); }
+.wc-input-name { font-family: var(--font-display); font-size: 24px; }
+
+/* ---- section label ---- */
+.wc-label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--fog); }
+
+/* ---- responsive container (desktop hold-up) ---- */
+.wc-container { width: 100%; max-width: 720px; margin: 0 auto; }
+@media (min-width: 720px) {
+  .wc-fab { right: calc(50% - 360px + 20px); }
+}
